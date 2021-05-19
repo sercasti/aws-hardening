@@ -1,4 +1,4 @@
-# AWS ACCOUNT HARDENING
+# TL;DR AWS ACCOUNT HARDENING
 
 Table of contents
 =================
