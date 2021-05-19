@@ -41,7 +41,7 @@ You will find some SCP examples on the /scps folder in this repository, and you 
 
 ---
 
-## When you have been hacked:
+## When your account has been compromised:
 
 Step 1: Sign in as the AWS account root user (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html) (not your IAM user). Delete the exposed AWS Access Key: https://aws.amazon.com/premiumsupport/knowledge-center/delete-access-key/ and delete any Root account programatic Access keys that could have been created during the breach.
 
