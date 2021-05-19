@@ -2,14 +2,13 @@
 
 Table of contents
 =================
-# Table of contents
 1. [Initial settings to harden your account security](#initial)
 2. [Additional measures that will be helpful](#additional)
 3. [When your account has been compromised](#compromised)
 4. [Periodically](#periodically)
 
 
-## Initial settings to harden your account security <a name="initial"></a>:
+## Initial settings to harden your account security<a name="initial"></a>:
 
 - Enable multi-factor authentication (MFA) on the root user (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html#id_root-user_manage_mfa) and any IAM users (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html) with console access. Enabling MFA can help you to secure the accounts and prevent unauthorized users from logging in to accounts without a security token.
 
@@ -32,7 +31,7 @@ Additional info: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices
 
 ---
 
-## Additional measures that will be helpful <a name="additional"></a>:
+## Additional measures that will be helpful<a name="additional"></a>:
 
 - Create a CloudWatch billing alarm to avoid runaways: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html
 
@@ -50,7 +49,7 @@ You will find some SCP examples on the /scps folder in this repository, and you 
 
 ---
 
-## When your account has been compromised <a name="compromised"></a>:
+## When your account has been compromised<a name="compromised"></a>:
 
 Step 1: Sign in as the AWS account root user (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html) (not your IAM user). Delete the exposed AWS Access Key: https://aws.amazon.com/premiumsupport/knowledge-center/delete-access-key/ and delete any Root account programatic Access keys that could have been created during the breach.
 
@@ -79,7 +78,7 @@ https://aws.amazon.com/es/premiumsupport/knowledge-center/potential-account-comp
 
 ---
 
-## Periodically <a name="periodically"></a>:
+## Periodically<a name="periodically"></a>:
 
 - Check Trusted advisor, it is a free service that will cover some data points on your accounts and raise red flags on security issues
 
