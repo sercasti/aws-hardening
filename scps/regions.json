@@ -27,7 +27,7 @@
                     "iam:*",
                     "importexport:*",
                     "kms:*",
-                    "mobileanalytics:*",
+                    "mobileanalytics:*",
                     "networkmanager:*",
                     "organizations:*",
                     "pricing:*",
@@ -44,16 +44,16 @@
                     "waf:*",
                     "wafv2:*",
                     "wellarchitected:*"
-                ],
-                "Resource": "*",
-                "Condition": {
-                    "StringNotEquals": {
-                        "aws:RequestedRegion": [
-                            "us-east-1",
-                            "us-east-2"
-                        ]
-                    }
-                }
-            }
-        ]
+                ],
+                "Resource": "*",
+                "Condition": {
+                    "StringNotEquals": {
+                        "aws:RequestedRegion": [
+                            "us-east-1",
+                            "us-east-2"
+                        ]
+                    }
+                }
+            }
+        ]
     }
