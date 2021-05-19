@@ -15,7 +15,9 @@ Table of contents
 - Delete all programatic IAM keys from the root account, you shouldn’t use those, at all. If somehow those access keys are leaked in the future, they have unrestricted access to do anything: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#lock-away-credentials
 
 - Enable AWS CloudTrail logging services: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail.html - Create a new trail, only for writes, and enable trail insights. This will generate a mere 50 cents monthly cost, but it will help detecting and preventing security incidents.
-![alt text](images/cloudtrail.png "cloudtrail")
+<p align="center">
+<img src="https://github.com/sercasti/aws-hardening/raw/main/images/cloudtrail.png" width=70% height=70%>
+</p>
 
 - Activate AWS Cost Anomaly Detection (it's free): https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/getting-started-ad.html#create-ad-alerts
 
@@ -38,11 +40,8 @@ Additional info: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices
 - Enable GuardDuty (https://aws.amazon.com/guardduty/), it will not only help on the reactive side of incidents, but it will also prevent them. GuardDuty will alert you when there are unsafe settings, attack surfaces or know vulnerabilities on your AWS resources or instances. This service has a 30 days free trail that you can use to validate your accounts.
 
 - Even if you use only 1 AWS account, you can setup and AWS organization (it's free) and create SCPs (secure control policies) to restrict things that you know for sure should never happen on the account, for example, regions that will never be used, or instance types that should never be run.
-
-![alt text](images/createOrg.png "organizations" ) 
-
-![alt text](images/scpscreated.png "scps")
-
+<p align="center"><img src="https://github.com/sercasti/aws-hardening/raw/main/images/createOrg.png" width=30% height=30%></p>
+<p align="center"><img src="https://github.com/sercasti/aws-hardening/raw/main/images/scpscreated.png" width=60% height=60%></p>
 Don'f forget to apply the policy to the account after creating it. https://aws.amazon.com/blogs/security/how-to-use-service-control-policies-to-set-permission-guardrails-across-accounts-in-your-aws-organization/
 
 You will find some SCP examples on the /scps folder in this repository, and you can find more here: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html
