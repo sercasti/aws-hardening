@@ -33,7 +33,7 @@ Additional info: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices
 
 ![alt text](images/createOrg.png "organizations" ) 
 
-![alt text](images/scpsCreated.png "scps")
+![alt text](images/scpscreated.png "scps")
 
 Don'f forget to apply the policy to the account after creating it. https://aws.amazon.com/blogs/security/how-to-use-service-control-policies-to-set-permission-guardrails-across-accounts-in-your-aws-organization/
 
