@@ -89,4 +89,4 @@ https://aws.amazon.com/es/premiumsupport/knowledge-center/potential-account-comp
 
 - Remove unnecessary credentials: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_finding-unused.html
 
-More info: https://maturitymodel.security.aws.dev/
+These recommendations are derived from the first phase of the security maturity model from AWS, as they are quick wins to safely start your cloud journey. If you wish to go deeper into this model, fee free to visit https://maturitymodel.security.aws.dev/
