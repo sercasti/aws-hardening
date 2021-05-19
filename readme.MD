@@ -37,7 +37,7 @@ Additional info: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices
 
 - Create a CloudWatch billing alarm to avoid runaways: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html
 
-- Enable GuardDuty (https://aws.amazon.com/guardduty/), it will not only help on the reactive side of incidents, but it will also prevent them. GuardDuty will alert you when there are unsafe settings, attack surfaces or know vulnerabilities on your AWS resources or instances. This service has a 30 days free trail that you can use to validate your accounts.
+- Enable GuardDuty (https://aws.amazon.com/guardduty/), it will not only help on the reactive side of incidents, but it will also prevent them. GuardDuty will alert you when there are unsafe settings, attack surfaces or known vulnerabilities on your AWS resources or instances. This service has a 30 days free trial that you can use to validate your accounts.
 
 - Even if you use only 1 AWS account, you can setup and AWS organization (it's free) and create SCPs (secure control policies) to restrict things that you know for sure should never happen on the account, for example, regions that will never be used, or instance types that should never be run.
 <p align="center"><img src="https://github.com/sercasti/aws-hardening/raw/main/images/createOrg.png" width=30% height=30%></p>
