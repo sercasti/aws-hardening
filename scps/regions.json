@@ -1,15 +1,15 @@
 {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "DenyAllOutsideUSEast",
-                "Effect": "Deny",
-                "NotAction": [
-                    "a4b:*",
-                    "acm:*",
-                    "aws-marketplace-management:*",
-                    "aws-marketplace:*",
-                    "aws-portal:*",
+  "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "DenyAllOutsideUSEast",
+        "Effect": "Deny",
+        "NotAction": [
+                    "a4b:*",
+                    "acm:*",
+                    "aws-marketplace-management:*",
+                    "aws-marketplace:*",
+                    "aws-portal:*",
                     "awsbillingconsole:*",
                     "budgets:*",
                     "ce:*",
