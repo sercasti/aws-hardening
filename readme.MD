@@ -1,7 +1,7 @@
 # TL;DR AWS ACCOUNT HARDENING
 
-Table of contents
-=================
+## Table of contents
+
 1. [Initial settings to harden your account security](#initial)
 2. [Additional measures that will be helpful](#additional)
 3. [What to do when your account has been compromised](#compromised)
@@ -20,6 +20,10 @@ Table of contents
 </p>
 
 - Activate AWS Cost Anomaly Detection (it's free): https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/getting-started-ad.html#create-ad-alerts
+
+<p align="center">
+<img src="https://github.com/sercasti/aws-hardening/raw/main/images/costAnomaly.png" width=50% height=50%>
+</p>
 
 - Don't share IAM credentials among several people, create individual IAM users for each person on your team (it's free): https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users
 
