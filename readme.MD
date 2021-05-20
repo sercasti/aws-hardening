@@ -20,9 +20,8 @@
 </p>
 
 - Activate AWS Cost Anomaly Detection (it's free): https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/getting-started-ad.html#create-ad-alerts
-
 <p align="center">
-<img src="https://github.com/sercasti/aws-hardening/raw/main/images/costAnomaly.png" width=50% height=50%>
+<img src="https://github.com/sercasti/aws-hardening/raw/main/images/costAnomaly.png" width=80% height=80%>
 </p>
 
 - Don't share IAM credentials among several people, create individual IAM users for each person on your team (it's free): https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users
