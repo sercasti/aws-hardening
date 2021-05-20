@@ -26,7 +26,7 @@
 
 - Don't share IAM credentials among several people, create individual IAM users for each person on your team (it's free): https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users
 
-- Use the "Least Privileged Principle" for your IAM Roles, grant least privilege for each user: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege
+- Use the "Least Privileged Principle" for your IAM Roles, grant least privilege for each user/role: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege
 
 - Set a password policy for IAM users: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html
 
