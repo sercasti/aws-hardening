@@ -67,7 +67,7 @@ Step 6: Check all public buckets for leaked credentials or outdated libraries th
 
 Step 7: Check all code repositories to make sure IAM credentials were not pushed to them.
 
-Step 8: Respond to the notifications that you received from AWS Support through the AWS Support Center (https://console.aws.amazon.com/support/).
+Step 8: Respond to the notifications that you received from AWS Support through the AWS Support Center (https://console.aws.amazon.com/support/). If you can't sign in, use the Contact Form: https://pages.awscloud.com/contact-us-account-support.html If you have any questions or concerns, create a new AWS Support case in the AWS Support Center: https://console.aws.amazon.com/support/
 
 Step 9: Check your bill (https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/invoice.html). Your bill can help you identify resources that you didn't create.
 
