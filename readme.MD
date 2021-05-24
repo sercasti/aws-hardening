@@ -4,7 +4,7 @@
 
 1. [Initial settings to harden your account security](#initial)
 2. [Additional measures that will be helpful](#additional)
-3. [What to do when your account has been compromised](#compromised)
+3. [What to do if your account has been compromised](#compromised)
 4. [Periodically](#periodically)
 
 
@@ -51,7 +51,7 @@ You will find some SCP examples on the /scps folder in this repository, and you 
 
 ---
 
-## What to do when your account has been compromised<a name="compromised"></a>:
+## What to do if your account has been compromised<a name="compromised"></a>:
 
 Step 1: Sign in as the AWS account root user (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html) (not your IAM user). Delete the exposed AWS Access Key: https://aws.amazon.com/premiumsupport/knowledge-center/delete-access-key/ and delete any Root account programmatic Access keys that could have been created during the breach.
 
