@@ -42,7 +42,10 @@ Additional info: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices
 
 - Enable GuardDuty (https://aws.amazon.com/guardduty/), it will not only help on the reactive side of incidents, but it will also prevent them. GuardDuty will alert you when there are unsafe settings, attack surfaces or known vulnerabilities on your AWS resources or instances. This service has a 30 days free trial that you can use to validate your accounts.
 
-- Even if you use only 1 AWS account, you can setup an AWS organization (it's free) and create SCPs (secure control policies) to restrict things that you know for sure should never happen on the account, for example, regions that will never be used, or instance types that should never be run.
+- Group workloads based on business purpose and ownership using different AWS accounts (they are free), by separating your workloads on different accounts, you reduce blast radius, force physical isolation of your resources, avoid dependencies and conflicts, constrain access to sensitive data, and limit scope of impact. Think of it as a logical grouping, whatever fits your scenario best, for example, by environment (dev, prod, test), or by application.  
+This will also help with service quotas and cost management.   
+https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/benefits-of-using-multiple-aws-accounts.html  
+You can set up an AWS organization (it's free) to centralize billing on a payer account, and create SCPs (secure control policies) to restrict things that you know for sure should never happen on any of those accounts, for example, regions that should never be used, or instance types that should never be run. 
 <p align="center"><img src="https://github.com/sercasti/aws-hardening/raw/main/images/createOrg.png" width=30% height=30%></p>
 <p align="center"><img src="https://github.com/sercasti/aws-hardening/raw/main/images/scpscreated.png" width=60% height=60%></p>
 Don't forget to apply the policy to the account after creating it. https://aws.amazon.com/blogs/security/how-to-use-service-control-policies-to-set-permission-guardrails-across-accounts-in-your-aws-organization/
