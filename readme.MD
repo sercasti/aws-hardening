@@ -15,7 +15,7 @@
 - Delete all programmatic IAM keys from the root account, you shouldn’t use those, at all. If somehow those access keys are leaked in the future, they have unrestricted access to do anything: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#lock-away-credentials
 
 - The root account only needs to be used for very specific account tasks, for every other action we recommend that you use an IAM user with appropriate permissions to perform tasks and access AWS resources. Only use the root account when you need to do some of these tasks:
-https://docs.aws.amazon.com/general/latest/gr/root-vs-iam.html#aws_tasks-that-require-root
+https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-tasks.html
 
 - Enable AWS CloudTrail logging services: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail.html - Create a new trail, only for writes, and enable trail insights. This will generate a mere 50 cents monthly cost, but it will help detecting and preventing security incidents.
 <p align="center">
