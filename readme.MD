@@ -56,8 +56,8 @@ Don't forget to apply the policy to the account after creating it. https://aws.a
 You will find some SCP examples on the /scps folder in this repository, and you can find more here: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html
 
 Recommended SCP's to reduce risk surface: 
-- Disable Regions your business should never use (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples_general.html#example-scp-deny-region)
-- Disable instance types your business should never use (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples_ec2.html)
+- Disable Regions your business should never use (https://github.com/aws-samples/service-control-policy-examples/tree/main/Region-controls)
+- Disable instance types your business should never use (https://github.com/aws-samples/service-control-policy-examples/blob/main/Service-specific-controls/Amazon-EC2/Require-Amazon-EC2-instances-to-use-a-specific-type.json)
 - Disable the root user of the member accounts of your organization (https://asecure.cloud/a/scp_root_account/)
 
 ---
