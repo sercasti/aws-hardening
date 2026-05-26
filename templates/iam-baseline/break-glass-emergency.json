@@ -1,0 +1,36 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AdministratorAccessWithMFA",
+      "Effect": "Allow",
+      "Action": "*",
+      "Resource": "*",
+      "Condition": {
+        "Bool": {
+          "aws:MultiFactorAuthPresent": "true"
+        },
+        "NumericLessThan": {
+          "aws:MultiFactorAuthAge": "3600"
+        },
+        "BoolIfExists": {
+          "aws:SecureTransport": "true"
+        }
+      }
+    },
+    {
+      "Sid": "DenyWithoutHardwareMFA",
+      "Effect": "Deny",
+      "Action": "*",
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "aws:MultiFactorAuthType": [
+            "U2F",
+            "WebAuthn"
+          ]
+        }
+      }
+    }
+  ]
+}

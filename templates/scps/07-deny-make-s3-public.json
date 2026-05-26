@@ -1,0 +1,61 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyPublicS3BucketPolicy",
+      "Effect": "Deny",
+      "Action": [
+        "s3:PutBucketPolicy",
+        "s3:PutBucketAcl",
+        "s3:PutObjectAcl"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "Null": {
+          "aws:ResourceTag/public-bucket": "true"
+        },
+        "StringEqualsIfExists": {
+          "s3:x-amz-acl": [
+            "public-read",
+            "public-read-write",
+            "authenticated-read"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "DenyDisablePublicAccessBlock",
+      "Effect": "Deny",
+      "Action": [
+        "s3:DeletePublicAccessBlock",
+        "s3:PutPublicAccessBlock"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "Null": {
+          "aws:ResourceTag/public-bucket": "true"
+        },
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/AWSReservedSSO_BreakGlass_*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "DenyAccountLevelPublicAccessBlockChanges",
+      "Effect": "Deny",
+      "Action": [
+        "s3:PutAccountPublicAccessBlock"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/AWSReservedSSO_BreakGlass_*"
+          ]
+        }
+      }
+    }
+  ]
+}

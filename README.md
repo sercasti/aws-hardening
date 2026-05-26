@@ -29,16 +29,20 @@ Tres cosas concretas. Ninguna requiere presupuesto. Todas se hacen en una mañan
 2. **Elegí UN ítem de Nivel 2 y agendalo para tu próximo sprint** (10 minutos). Mirá la sección [Modelo de madurez](#modelo-de-madurez) y elegí cuál te duele menos.
 3. **Corré un prompt con tu agente de IA favorito.** En `prompts/security-review.md` tenés uno listo: copialo, pegáselo a Claude, GPT, Kiro, Cursor, el que uses. Te devuelve un reporte priorizado de vulnerabilidades de infra y código. Eso es tu Nivel 0, tu punto de partida.
 
+Si querés un walkthrough paso a paso desde "abrí el repo" hasta "vi mi maturity score subir", andá a [QUICKSTART.md](./QUICKSTART.md). Una hora, una cuenta sandbox.
+
 ## Lo que hay en este repo
 
 | Carpeta | Qué contiene | Cuándo usarlo |
 |---------|--------------|---------------|
-| [`prompts/`](./prompts) | Prompts listos para copiar y pegar en tu agente favorito. Audit de seguridad, generación de fixes, revisión de PRs. | Lunes a la mañana. Cuando querés un escaneo rápido sin instalar nada. |
-| [`specs/`](./specs) | Specs por nivel del maturity model. Definen qué cuenta como "fortificado" en cada nivel. | Cuando estás listo para que un agente Kiro/Claude Code/Cursor lea el spec y abra PRs contra tu infra. |
-| [`demos/`](./demos) | Tres demos completas del loop: `kiro/`, `claude-code/`, `cursor/`. Cada una tiene un README, un repo de Terraform de ejemplo, y la grabación. | Cuando querés ver el patrón en acción antes de implementarlo. |
-| [`playbooks/`](./playbooks) | Playbook de incident response: credencial filtrada, S3 público accidental, escalación IAM. | Cuando algo ya pasó y necesitás ejecutar pasos sin pensar. |
-| [`templates/`](./templates) | Templates de SCP, configs de IMDSv2, defaults de KMS, baseline de GuardDuty. | Cuando avanzás del Nivel 1 al Nivel 2. |
-| [`assessment-cli/`](./assessment-cli) | CLI en Python que corre las 8 preguntas del diagnóstico contra una cuenta AWS y te devuelve un scorecard. | Cuando querés métricas programáticas y no solo el output del agente. |
+| [`prompts/`](./prompts) | 7 prompts listos para copiar y pegar en tu agente favorito. Audit de seguridad, IAM deep dive, SCP design, blast radius, IR triage, PR review, spec bootstrap. | Lunes a la mañana. Cuando querés un escaneo rápido sin instalar nada. |
+| [`specs/`](./specs) | Specs por nivel del maturity model (4 niveles). Definen qué cuenta como "fortificado" en cada nivel. | Cuando estás listo para que un agente Kiro/Claude Code/Cursor lea el spec y abra PRs contra tu infra. |
+| [`demos/`](./demos) | Tres demos completas del loop: `kiro/`, `claude-code/`, `cursor/`. Cada una con README, ejemplo de sesión, y mini-repo de prueba. | Cuando querés ver el patrón en acción antes de implementarlo. |
+| [`playbooks/`](./playbooks) | 8 playbooks de incident response: credencial filtrada, S3 público, IAM escalation, region anómala, cost spike, EC2 comprometida, cross-account, exfil. | Cuando algo ya pasó y necesitás ejecutar pasos sin pensar. |
+| [`scripts/`](./scripts) | 7 scripts bash de Fase 2 (asistido): isolate-instance, triage-public-bucket, iam-activity-report, region-activity-report, cost-spike-triage, cross-account-audit, exfil-timeline. | Cuando sos el on-call a las 3am y necesitás contexto en 10 segundos. |
+| [`templates/`](./templates) | 7 SCP templates + 3 IAM baselines + 2 KMS defaults. Configurables, con guía de rollout. | Cuando avanzás del Nivel 1 al Nivel 2. |
+| [`assessment-cli/`](./assessment-cli) | CLI en Python con 13 checks que escanea una cuenta AWS y devuelve maturity score + plan priorizado en JSON o markdown. | Cuando querés métricas programáticas y no solo el output del agente. |
+| [`docs/`](./docs) | Background: overview del maturity model, arquitectura del loop, cómo pasar contexto entre agentes. | Cuando querés entender el "por qué" antes del "cómo". |
 
 ## Modelo de madurez
 

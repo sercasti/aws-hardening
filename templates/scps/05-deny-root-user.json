@@ -1,0 +1,23 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyAllActionsByRoot",
+      "Effect": "Deny",
+      "Action": "*",
+      "Resource": "*",
+      "Condition": {
+        "StringLike": {
+          "aws:PrincipalArn": "arn:aws:iam::*:root"
+        },
+        "ForAllValues:StringNotEquals": {
+          "aws:CalledVia": [
+            "billing.amazonaws.com",
+            "support.amazonaws.com",
+            "organizations.amazonaws.com"
+          ]
+        }
+      }
+    }
+  ]
+}

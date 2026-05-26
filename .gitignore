@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+.eggs/
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Output de sesiones (no commitear)
+/tmp/
+runs/
+baseline*.json
+plan*.md
+*-followup.md
+
+# AWS credentials (NUNCA committear)
+.aws/
+*.pem
+*.key
+credentials
+config
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Terraform state
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Environment
+.env
+.env.local
+
+# Agente outputs (ephemeral)
+.claude/sessions/
+.cursor/sessions/

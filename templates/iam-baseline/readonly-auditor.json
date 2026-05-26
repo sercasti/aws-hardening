@@ -1,0 +1,63 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadOnlyAccessOnAllServices",
+      "Effect": "Allow",
+      "Action": [
+        "*:Describe*",
+        "*:Get*",
+        "*:List*",
+        "*:Lookup*",
+        "*:View*",
+        "cloudtrail:LookupEvents",
+        "iam:GenerateCredentialReport",
+        "iam:GenerateServiceLastAccessedDetails",
+        "iam:SimulatePrincipalPolicy",
+        "iam:SimulateCustomPolicy",
+        "access-analyzer:*",
+        "config:Select*",
+        "config:Get*",
+        "config:Describe*",
+        "config:List*",
+        "guardduty:Get*",
+        "guardduty:List*",
+        "guardduty:Describe*",
+        "securityhub:Get*",
+        "securityhub:List*",
+        "securityhub:Describe*",
+        "macie2:Get*",
+        "macie2:List*",
+        "macie2:Describe*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyReadingSecrets",
+      "Effect": "Deny",
+      "Action": [
+        "secretsmanager:GetSecretValue",
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+        "ssm:GetParametersByPath",
+        "kms:Decrypt",
+        "kms:GenerateDataKey"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyReadingS3ObjectContent",
+      "Effect": "Deny",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "aws:ResourceTag/auditor-accessible": "true"
+        }
+      }
+    }
+  ]
+}

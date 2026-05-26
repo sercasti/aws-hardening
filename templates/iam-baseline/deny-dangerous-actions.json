@@ -1,0 +1,82 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyMostDangerousIAMActions",
+      "Effect": "Deny",
+      "Action": [
+        "iam:CreateUser",
+        "iam:CreateAccessKey",
+        "iam:CreateLoginProfile",
+        "iam:UpdateLoginProfile",
+        "iam:AttachUserPolicy",
+        "iam:PutUserPolicy",
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:UpdateAssumeRolePolicy",
+        "iam:PutRolePolicy",
+        "iam:AttachRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:CreatePolicy",
+        "iam:CreatePolicyVersion",
+        "iam:DeletePolicy",
+        "iam:DeletePolicyVersion",
+        "iam:SetDefaultPolicyVersion"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyOrganizationActions",
+      "Effect": "Deny",
+      "Action": [
+        "organizations:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyAccountActions",
+      "Effect": "Deny",
+      "Action": [
+        "account:*",
+        "aws-marketplace:*",
+        "billing:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyTerminateProductionInstances",
+      "Effect": "Deny",
+      "Action": [
+        "ec2:TerminateInstances",
+        "ec2:StopInstances",
+        "rds:DeleteDBInstance",
+        "rds:DeleteDBCluster"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/Environment": "production"
+        }
+      }
+    },
+    {
+      "Sid": "DenyDeleteCriticalS3Buckets",
+      "Effect": "Deny",
+      "Action": [
+        "s3:DeleteBucket",
+        "s3:DeleteObject",
+        "s3:DeleteObjectVersion"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEqualsIfExists": {
+          "aws:ResourceTag/data-classification": [
+            "sensitive",
+            "regulated",
+            "pii"
+          ]
+        }
+      }
+    }
+  ]
+}

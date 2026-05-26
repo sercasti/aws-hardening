@@ -1,0 +1,213 @@
+{
+  "metadata": {
+    "account_id": "123456789012",
+    "timestamp": "2026-05-26T14:23:11Z",
+    "regions_scanned": ["us-east-1", "sa-east-1"],
+    "checks_run": 13
+  },
+  "results": [
+    {
+      "check": "mfa_root",
+      "level": 1,
+      "description": "Verifica que el usuario root tenga MFA habilitado",
+      "status": "pass",
+      "message": "Root user tiene MFA habilitado",
+      "severity": "critical",
+      "remediation": null,
+      "evidence": {}
+    },
+    {
+      "check": "cloudtrail",
+      "level": 1,
+      "description": "Verifica CloudTrail multi-region con file integrity",
+      "status": "pass",
+      "message": "1 multi-region trail(s) activo(s) con file integrity",
+      "severity": "critical",
+      "remediation": null,
+      "evidence": {
+        "trails": ["org-trail"]
+      }
+    },
+    {
+      "check": "guardduty",
+      "level": 1,
+      "description": "Verifica GuardDuty habilitado en regions activas",
+      "status": "fail",
+      "message": "DISABLED en: sa-east-1",
+      "severity": "critical",
+      "remediation": "aws guardduty create-detector --enable --region sa-east-1",
+      "evidence": {
+        "enabled_in": ["us-east-1"],
+        "disabled_in": ["sa-east-1"]
+      }
+    },
+    {
+      "check": "identity_center",
+      "level": 1,
+      "description": "Verifica Identity Center activo y IAM users minimizados",
+      "status": "warn",
+      "message": "Identity Center activo, pero todavia hay 3 IAM users humanos",
+      "severity": "medium",
+      "remediation": "Migrar usuarios restantes a SSO y eliminar IAM users",
+      "evidence": {
+        "iam_users_remaining": ["legacy-admin", "ops-jane", "ci-bot"]
+      }
+    },
+    {
+      "check": "access_analyzer",
+      "level": 1,
+      "description": "Verifica IAM Access Analyzer activo",
+      "status": "warn",
+      "message": "Access Analyzer activo (2 analyzers), 8 findings activos. Revisar findings",
+      "severity": "medium",
+      "remediation": "Ir a IAM Access Analyzer en la consola y revisar cada finding",
+      "evidence": {
+        "analyzers": [
+          {"region": "us-east-1", "name": "org-analyzer", "type": "ORGANIZATION"}
+        ],
+        "active_findings": 8
+      }
+    },
+    {
+      "check": "cost_anomaly",
+      "level": 1,
+      "description": "Verifica Cost Anomaly Detection con monitores activos",
+      "status": "fail",
+      "message": "No hay Cost Anomaly Monitors configurados",
+      "severity": "high",
+      "remediation": "Cost Management Console → Cost Anomaly Detection → Create monitor",
+      "evidence": {}
+    },
+    {
+      "check": "budgets",
+      "level": 1,
+      "description": "Verifica AWS Budgets con notifications",
+      "status": "pass",
+      "message": "2 budget(s) con notifications",
+      "severity": "medium",
+      "remediation": null,
+      "evidence": {}
+    },
+    {
+      "check": "s3_public_access",
+      "level": 1,
+      "description": "Verifica block public access global y por bucket",
+      "status": "warn",
+      "message": "Account-level OK pero 4 bucket(s) sin block individual",
+      "severity": "medium",
+      "remediation": "Aplicar block_public_access en cada bucket. Defense in depth.",
+      "evidence": {
+        "buckets_missing": ["app-uploads-staging", "tmp-exports", "logs-archive", "old-bucket-2023"]
+      }
+    },
+    {
+      "check": "scps",
+      "level": 2,
+      "description": "Verifica SCPs activos cubriendo controles basicos",
+      "status": "fail",
+      "message": "No hay SCPs custom configurados",
+      "severity": "high",
+      "remediation": "Empezar con 2-3 SCPs basicos (ver templates/scps/)",
+      "evidence": {}
+    },
+    {
+      "check": "kms_rotation",
+      "level": 2,
+      "description": "Verifica KMS rotation en CMKs customer-managed",
+      "status": "fail",
+      "message": "6/18 keys sin rotation",
+      "severity": "medium",
+      "remediation": "aws kms enable-key-rotation --key-id [KEY_ID] --region [REGION]",
+      "evidence": {
+        "keys_without_rotation": [
+          {"region": "us-east-1", "key_id": "abc-123", "alias": "rds-backups"}
+        ]
+      }
+    },
+    {
+      "check": "vpc_flow_logs",
+      "level": 2,
+      "description": "Verifica VPC Flow Logs activos en todos los VPCs",
+      "status": "pass",
+      "message": "Todos los 4 VPCs tienen Flow Logs activos",
+      "severity": "high",
+      "remediation": null,
+      "evidence": {}
+    },
+    {
+      "check": "imdsv2",
+      "level": 2,
+      "description": "Verifica que EC2 instances usen IMDSv2 (no v1)",
+      "status": "fail",
+      "message": "2/12 instances con IMDSv2 NO obligatorio (vulnerable a SSRF)",
+      "severity": "high",
+      "remediation": "aws ec2 modify-instance-metadata-options --instance-id [ID] --http-tokens required",
+      "evidence": {
+        "v1_required": [],
+        "optional": [
+          {"region": "us-east-1", "instance_id": "i-abc", "type": "t3.medium"},
+          {"region": "us-east-1", "instance_id": "i-def", "type": "m5.large"}
+        ]
+      }
+    },
+    {
+      "check": "security_hub",
+      "level": 3,
+      "description": "Verifica Security Hub habilitado con standards activos",
+      "status": "fail",
+      "message": "Security Hub no habilitado en ninguna region",
+      "severity": "high",
+      "remediation": "aws securityhub enable-security-hub --region [REGION]",
+      "evidence": {}
+    }
+  ],
+  "summary": {
+    "total": 13,
+    "pass": 5,
+    "fail": 5,
+    "warn": 3,
+    "error": 0,
+    "maturity_score": 1.3,
+    "level_1_completion": 0.5,
+    "level_2_completion": 0.25,
+    "level_3_completion": 0.0,
+    "level_4_completion": null
+  },
+  "prioritized_actions": [
+    {
+      "rank": 1,
+      "check": "guardduty",
+      "level": 1,
+      "severity": "critical",
+      "action": "aws guardduty create-detector --enable --region sa-east-1"
+    },
+    {
+      "rank": 2,
+      "check": "cost_anomaly",
+      "level": 1,
+      "severity": "high",
+      "action": "Cost Management Console → Cost Anomaly Detection → Create monitor"
+    },
+    {
+      "rank": 3,
+      "check": "scps",
+      "level": 2,
+      "severity": "high",
+      "action": "Empezar con 2-3 SCPs basicos (ver templates/scps/)"
+    },
+    {
+      "rank": 4,
+      "check": "imdsv2",
+      "level": 2,
+      "severity": "high",
+      "action": "aws ec2 modify-instance-metadata-options --instance-id [ID] --http-tokens required"
+    },
+    {
+      "rank": 5,
+      "check": "security_hub",
+      "level": 3,
+      "severity": "high",
+      "action": "aws securityhub enable-security-hub --region [REGION]"
+    }
+  ]
+}

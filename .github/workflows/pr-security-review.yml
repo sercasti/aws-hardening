@@ -1,0 +1,102 @@
+name: PR security review
+
+# Workflow que corre security review en PRs que tocan archivos sensibles.
+# Reemplaza el revisor humano "tradicional" en items donde un LLM agrega valor
+# como second opinion.
+#
+# IMPORTANTE: Este workflow es ilustrativo. Adaptarlo a tu setup.
+# Requiere ANTHROPIC_API_KEY como secret en GitHub.
+
+on:
+  pull_request:
+    paths:
+      - 'templates/scps/**'
+      - 'templates/iam-baseline/**'
+      - 'templates/kms-defaults/**'
+      - 'terraform/**'
+      - '**/*.tf'
+      - '**/*.json'
+
+jobs:
+  security-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        run: |
+          git diff --name-only origin/${{ github.base_ref }}..HEAD > /tmp/changed.txt
+          cat /tmp/changed.txt
+
+      - name: Generate review prompt
+        run: |
+          cat > /tmp/prompt.md <<'EOF'
+          # Rol
+          Sos un Senior Security Engineer revisando un PR.
+
+          # Contexto
+          El PR modifica archivos sensibles (SCPs, IAM policies, Terraform).
+          El repo es aws-hardening (companion del talk de AWS Community Day).
+
+          # Tarea
+          Analizar el diff completo. Para cada cambio:
+          1. Evaluar si introduce un risk de seguridad.
+          2. Verificar consistencia con templates existentes.
+          3. Verificar que SCPs tienen exceptions documentadas si aplican.
+          4. Para IAM policies: confirmar least privilege.
+          5. Para Terraform: validar que outputs no expone secrets.
+
+          # Output
+          Markdown con:
+          - ## Resumen (1-2 líneas)
+          - ## Findings (cada uno con: severity, file:line, descripción, suggested fix)
+          - ## Approved / Request changes (decisión final)
+
+          # Constraints
+          - Si dudás, request changes (no approve).
+          - Si encontrás algo crítico (Principal "*" sin condiciones, root user con permisos, etc.), severity Critical.
+          - No commentés sobre style/formatting, foco en security.
+
+          # Diff
+          EOF
+          git diff origin/${{ github.base_ref }}..HEAD -- $(cat /tmp/changed.txt | tr '\n' ' ') >> /tmp/prompt.md
+
+      - name: Run review with Claude
+        id: review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Llamada a la API de Anthropic
+          response=$(curl -s https://api.anthropic.com/v1/messages \
+            --header "x-api-key: $ANTHROPIC_API_KEY" \
+            --header "anthropic-version: 2023-06-01" \
+            --header "content-type: application/json" \
+            --data "$(jq -n --rawfile p /tmp/prompt.md '{
+              model: "claude-opus-4-6",
+              max_tokens: 4096,
+              messages: [{role: "user", content: $p}]
+            }')")
+
+          echo "$response" | jq -r '.content[0].text' > /tmp/review.md
+          cat /tmp/review.md
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('/tmp/review.md', 'utf8');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## Security Review (LLM)\n\n${body}\n\n---\n*Esto es second opinion automatizada. No reemplaza review humano para cambios críticos.*`
+            });

@@ -1,0 +1,28 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyGuardDutyDisable",
+      "Effect": "Deny",
+      "Action": [
+        "guardduty:DeleteDetector",
+        "guardduty:UpdateDetector",
+        "guardduty:DisassociateFromMasterAccount",
+        "guardduty:DisassociateMembers",
+        "guardduty:DeleteMembers",
+        "guardduty:StopMonitoringMembers",
+        "guardduty:DeleteIPSet",
+        "guardduty:DeleteThreatIntelSet"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/AWSReservedSSO_BreakGlass_*",
+            "arn:aws:iam::*:role/GuardDutyAdminRole"
+          ]
+        }
+      }
+    }
+  ]
+}

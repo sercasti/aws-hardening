@@ -1,0 +1,49 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyCloudTrailDisableOrDelete",
+      "Effect": "Deny",
+      "Action": [
+        "cloudtrail:StopLogging",
+        "cloudtrail:DeleteTrail",
+        "cloudtrail:UpdateTrail",
+        "cloudtrail:PutEventSelectors",
+        "cloudtrail:PutInsightSelectors",
+        "cloudtrail:RemoveTags",
+        "cloudtrail:CreateTrail"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/AWSReservedSSO_BreakGlass_*",
+            "arn:aws:iam::*:role/OrganizationAccountAccessRole"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "DenyCloudTrailBucketDeletion",
+      "Effect": "Deny",
+      "Action": [
+        "s3:DeleteBucket",
+        "s3:DeleteBucketPolicy",
+        "s3:PutBucketAcl",
+        "s3:PutBucketPolicy"
+      ],
+      "Resource": [
+        "arn:aws:s3:::cloudtrail-*",
+        "arn:aws:s3:::*-cloudtrail-*",
+        "arn:aws:s3:::*-audit-*"
+      ],
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/AWSReservedSSO_BreakGlass_*"
+          ]
+        }
+      }
+    }
+  ]
+}

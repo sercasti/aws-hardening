@@ -1,0 +1,109 @@
+{
+  "Version": "2012-10-17",
+  "Id": "cmk-default-policy",
+  "Statement": [
+    {
+      "Sid": "EnableIAMUserPermissions",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::ACCOUNT_ID:root"
+      },
+      "Action": "kms:*",
+      "Resource": "*",
+      "Condition": {
+        "Bool": {
+          "aws:MultiFactorAuthPresent": "true"
+        }
+      }
+    },
+    {
+      "Sid": "AllowKeyAdministrators",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::ACCOUNT_ID:role/KMSAdminRole"
+        ]
+      },
+      "Action": [
+        "kms:Create*",
+        "kms:Describe*",
+        "kms:Enable*",
+        "kms:List*",
+        "kms:Put*",
+        "kms:Update*",
+        "kms:Revoke*",
+        "kms:Disable*",
+        "kms:Get*",
+        "kms:Delete*",
+        "kms:TagResource",
+        "kms:UntagResource",
+        "kms:ScheduleKeyDeletion",
+        "kms:CancelKeyDeletion"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "Bool": {
+          "aws:MultiFactorAuthPresent": "true"
+        }
+      }
+    },
+    {
+      "Sid": "AllowKeyUsageForServiceWorkloads",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::ACCOUNT_ID:role/ApplicationServiceRole"
+        ]
+      },
+      "Action": [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "kms:ViaService": [
+            "s3.us-east-1.amazonaws.com",
+            "rds.us-east-1.amazonaws.com",
+            "secretsmanager.us-east-1.amazonaws.com"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "AllowGrantsForServices",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::ACCOUNT_ID:role/ApplicationServiceRole"
+        ]
+      },
+      "Action": [
+        "kms:CreateGrant",
+        "kms:ListGrants",
+        "kms:RevokeGrant"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "Bool": {
+          "kms:GrantIsForAWSResource": "true"
+        }
+      }
+    },
+    {
+      "Sid": "DenyKeyDeletionWithoutWaitingPeriod",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "kms:ScheduleKeyDeletion",
+      "Resource": "*",
+      "Condition": {
+        "NumericLessThan": {
+          "kms:ScheduleKeyDeletionPendingWindowInDays": "30"
+        }
+      }
+    }
+  ]
+}
